@@ -7,11 +7,13 @@ pipeline {
             choices: ['plan', 'apply'],
             description: 'Select the action to perform'
         )
+        choice(name: 'BRANCH', choices: ['main', 'develop', 'feature/example'], description: 'Select branch to build')
     }
     stages {
         stage('Checkout') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ygminds73/Terraform-Automation.git']])
+                checkout scmGit(branches: [[name: "*/${params.BRANCH}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/priteedivekar/Terraform-Automation.git']])
+                echo "Checked out branch ${params.BRANCH}"
             }
         }
     
